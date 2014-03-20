@@ -7,7 +7,16 @@
   </head>
   <body>
     <ul id="log"></ul>
-    <h2>drops files here</h2>
+    <h2>Renamer</h2>
+    <form id="optionsForm">
+      <fieldset>
+        <label for="find">Find</label><input type="text" id="find" placeHolder="Text to replace">
+        <label for="replace">Replace</label><input type="text" id="replace" placeHolder="Replacement text">
+        <label for="regex">RegEx</label><input type="checkbox" id="regex">
+        <label for="insensitive">Case Insensitive</label><input type="checkbox" id="insensitive">
+        <button type="submit">Rename</button>
+      </fieldset>
+    </form>
     <ul id="fileList"></ul>
     <script src="gui.js"></script>
   </body>

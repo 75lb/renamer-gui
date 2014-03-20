@@ -1,7 +1,13 @@
 var renamer = require("renamer"),
     $ = document.querySelector.bind(document),
     log = $("#log"),
-    fileList = $("#fileList");
+    $fileList = $("#fileList"),
+    optionsForm = $("#optionsForm"),
+    find = $("#find"),
+    replace = $("#replace"),
+    regex = $("#regex"),
+    insensitive = $("#insensitive"),
+    fileList = [];
 
 function addItem(msg, list){
     list = list || log;
@@ -10,23 +16,45 @@ function addItem(msg, list){
     list.appendChild(li);
 }
 
+function getRenameOptions(){
+    return new renamer.RenameOptions()
+        .set({
+            "dry-run": true,
+            find: find.value,
+            replace: replace.value,
+            regex: regex.checked,
+            insensitive: insensitive.checked
+        });
+}
+
 window.ondragover = function(e) { e.preventDefault(); return false };
 window.ondrop = function(e) { e.preventDefault(); return false };
 
-fileList.ondragover = function(e){
+$fileList.ondragover = function(e){
     this.classList.add("dragOver");
 };
-fileList.ondragleave = function(e){
+$fileList.ondragleave = function(e){
     this.classList.remove("dragOver");
 };
-fileList.ondrop = function(e){
+$fileList.ondrop = function(e){
     this.classList.remove("dragOver");
-    var files = e.dataTransfer.files;
+    
+    var files = e.dataTransfer.files,
+        renameOptions = new renamer.RenameOptions();
+        
     for (var i = 0; i < files.length; i++){
         var file = files[i];
-        addItem(file.path, fileList);
+        addItem(file.path, $fileList);
+        fileList.push(file.path);
     }
-    
+};
+
+optionsForm.onsubmit = function(e){
+    e.preventDefault();
+    var options = getRenameOptions();
+    options.files = fileList;
+    console.dir(options)
+    renamer.process(options);
 };
 
 /**

@@ -6,5 +6,8 @@
   "author": "Lloyd Brookes",
   "dependencies": {
       "renamer": "~0.3"
+  },
+  "window": {
+      "title": "Renamer"
   }
 }
