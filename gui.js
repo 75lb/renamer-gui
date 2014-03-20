@@ -60,8 +60,8 @@ optionsForm.onsubmit = function(e){
 /**
 @return {Array} results
 [
-    { before: "file1.txt", after: "clive.txt", done: false, error: "file exists" }
-    { before: "file2.txt", after: "clive2.txt", done: true }
+    { before: "file1.txt", after: "clive.txt", renamed: false, error: "file exists" }
+    { before: "file2.txt", after: "clive2.txt", renamed: true }
 ]
 
 renamer.rename(renameOptions);
