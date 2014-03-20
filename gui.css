@@ -1,0 +1,5 @@
+#fileList {
+  background-color: yellow;
+  min-height: 10em; }
+  #fileList.dragOver {
+    background-color: orange; }

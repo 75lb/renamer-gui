@@ -1,17 +1,33 @@
 var renamer = require("renamer"),
-    $ = document.querySelector.bind(document);
+    $ = document.querySelector.bind(document),
+    log = $("#log"),
+    fileList = $("#fileList");
 
-function log(msg){
+function addItem(msg, list){
+    list = list || log;
     var li = document.createElement("li");
     li.textContent = msg;
-    $("#log").appendChild(li);
+    list.appendChild(li);
 }
 
-renamer.process({
-    files: "test/fixture/*",
-    find: "file",
-    replace: "clive"
-});
+window.ondragover = function(e) { e.preventDefault(); return false };
+window.ondrop = function(e) { e.preventDefault(); return false };
+
+fileList.ondragover = function(e){
+    this.classList.add("dragOver");
+};
+fileList.ondragleave = function(e){
+    this.classList.remove("dragOver");
+};
+fileList.ondrop = function(e){
+    this.classList.remove("dragOver");
+    var files = e.dataTransfer.files;
+    for (var i = 0; i < files.length; i++){
+        var file = files[i];
+        addItem(file.path, fileList);
+    }
+    
+};
 
 /**
 @return {Array} results
