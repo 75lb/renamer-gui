@@ -12,3 +12,23 @@ renamer.process({
     find: "file",
     replace: "clive"
 });
+
+/**
+@return {Array} results
+[
+    { before: "file1.txt", after: "clive.txt", done: false, error: "file exists" }
+    { before: "file2.txt", after: "clive2.txt", done: true }
+]
+
+renamer.rename(renameOptions);
+
+or pipe.. 
+
+var renameOptions = new RenameOptions().set(options);
+
+renamer
+    .rename(renameOptions)
+    .stripIndex(renameOptions)
+    .etc(renameOptions);
+
+*/
