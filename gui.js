@@ -1,23 +1,21 @@
 var renamer = require("renamer"),
+    Renamer = renamer.Renamer,
+    RenameOptions = renamer.RenameOptions,
+    FileView = require("./view/FileView"),
     $ = document.querySelector.bind(document),
-    log = $("#log"),
-    $fileList = $("#fileList"),
     optionsForm = $("#optionsForm"),
     find = $("#find"),
     replace = $("#replace"),
     regex = $("#regex"),
-    insensitive = $("#insensitive"),
-    fileList = [];
+    insensitive = $("#insensitive");
 
-function addItem(msg, list){
-    list = list || log;
-    var li = document.createElement("li");
-    li.textContent = msg;
-    list.appendChild(li);
-}
+/* share access to the DOM with modules required */
+global.document = window.document;
+
+var fileList = new FileView($("#fileList"));
 
 function getRenameOptions(){
-    return new renamer.RenameOptions()
+    return new RenameOptions()
         .set({
             "dry-run": true,
             find: find.value,
@@ -30,49 +28,12 @@ function getRenameOptions(){
 window.ondragover = function(e) { e.preventDefault(); return false };
 window.ondrop = function(e) { e.preventDefault(); return false };
 
-$fileList.ondragover = function(e){
-    this.classList.add("dragOver");
-};
-$fileList.ondragleave = function(e){
-    this.classList.remove("dragOver");
-};
-$fileList.ondrop = function(e){
-    this.classList.remove("dragOver");
-    
-    var files = e.dataTransfer.files,
-        renameOptions = new renamer.RenameOptions();
-        
-    for (var i = 0; i < files.length; i++){
-        var file = files[i];
-        addItem(file.path, $fileList);
-        fileList.push(file.path);
-    }
-};
-
 optionsForm.onsubmit = function(e){
     e.preventDefault();
     var options = getRenameOptions();
-    options.files = fileList;
-    console.dir(options)
-    renamer.process(options);
+    options.files = fileList.getFileArray();
+    
+    var renamer = new Renamer(options);
+    var results = renamer.process();
+    console.dir(results);
 };
-
-/**
-@return {Array} results
-[
-    { before: "file1.txt", after: "clive.txt", renamed: false, error: "file exists" }
-    { before: "file2.txt", after: "clive2.txt", renamed: true }
-]
-
-renamer.rename(renameOptions);
-
-or pipe.. 
-
-var renameOptions = new RenameOptions().set(options);
-
-renamer
-    .rename(renameOptions)
-    .stripIndex(renameOptions)
-    .etc(renameOptions);
-
-*/
