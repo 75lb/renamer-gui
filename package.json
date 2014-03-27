@@ -5,7 +5,7 @@
   "main": "index.html",
   "author": "Lloyd Brookes",
   "dependencies": {
-    "renamer": "~0.3",
+    "renamer": "~0.4",
     "wodge": "~0.4.0"
   },
   "window": {

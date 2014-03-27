@@ -6,7 +6,6 @@ module.exports = FileView;
 function FileView(el){
     var self = this;
     /**
-    @property
     @example
         {
             "file1.txt": resultObject,
