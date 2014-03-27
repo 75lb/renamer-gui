@@ -1,23 +1,28 @@
 var renamer = require("renamer"),
-    Renamer = renamer.Renamer,
-    RenameOptions = renamer.RenameOptions,
+    RenamerOptions = renamer.RenamerOptions,
     FileView = require("./view/FileView"),
     $ = document.querySelector.bind(document),
     optionsForm = $("#optionsForm"),
     find = $("#find"),
     replace = $("#replace"),
     regex = $("#regex"),
-    insensitive = $("#insensitive");
+    insensitive = $("#insensitive"),
+    dryRun = $("#dryRun");
 
 /* share access to the DOM with modules required */
 global.document = window.document;
+global.$ = $;
 
-var fileList = new FileView($("#fileList"));
+/* cancel all default drag-drop behaviour */
+window.ondragover = function(e) { e.preventDefault(); return false };
+window.ondrop = function(e) { e.preventDefault(); return false };
 
-function getRenameOptions(){
-    return new RenameOptions()
+var fileView = new FileView($("#fileView"));
+
+function getRenamerOptions(){
+    return new RenamerOptions()
         .set({
-            "dry-run": true,
+            "dry-run": dryRun.checked,
             find: find.value,
             replace: replace.value,
             regex: regex.checked,
@@ -25,15 +30,19 @@ function getRenameOptions(){
         });
 }
 
-window.ondragover = function(e) { e.preventDefault(); return false };
-window.ondrop = function(e) { e.preventDefault(); return false };
 
 optionsForm.onsubmit = function(e){
     e.preventDefault();
-    var options = getRenameOptions();
-    options.files = fileList.getFileArray();
-    
-    var renamer = new Renamer(options);
-    var results = renamer.process();
+    var options = getRenamerOptions();
+    options.files = fileView.getFileArray();
+
+    var results = renamer.replace(options);
+    results = renamer.replaceIndexToken(results);
+    if (options["dry-run"]){
+        results = renamer.dryRun(results);
+    } else {
+        results = renamer.rename(results);
+    }
+    fileView.refresh(results);
     console.dir(results);
 };

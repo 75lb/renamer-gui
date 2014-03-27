@@ -1,12 +1,12 @@
 {
   "name": "renamer-gui",
   "version": "0.0.0",
-  "description": "",
+  "description": "Batch rename files and folders",
   "main": "index.html",
   "author": "Lloyd Brookes",
   "dependencies": {
     "renamer": "~0.3",
-    "wodge": "^0.4.0"
+    "wodge": "~0.4.0"
   },
   "window": {
     "title": "Renamer"

@@ -1,5 +1,5 @@
-#fileList {
+#fileView {
   background-color: yellow;
   min-height: 10em; }
-  #fileList.dragOver {
+  #fileView.dragOver {
     background-color: orange; }
