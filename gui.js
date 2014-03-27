@@ -43,6 +43,6 @@ optionsForm.onsubmit = function(e){
     } else {
         results = renamer.rename(results);
     }
-    fileView.refresh(results);
-    console.dir(results);
+    fileView.draw(results);
+    fileView.state = "done";
 };

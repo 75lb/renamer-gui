@@ -5,14 +5,10 @@ module.exports = FileView;
 
 function FileView(el){
     var self = this;
-    /**
-    @example
-        {
-            "file1.txt": resultObject,
-            "file2.txt": resultObject
-        }
-    */
-    this.listItems = {};
+    var resultArray = [];
+    this.resultArray = resultArray;
+    
+    this.state = null;
 
     this.el = el;
     this.el.ondragover = function(e){
@@ -23,30 +19,32 @@ function FileView(el){
     };
     this.el.ondrop = function(e){
         this.classList.remove("dragOver");
-
-        w.arrayify(e.dataTransfer.files).forEach(function(file){ 
-            var result = { before: file.path, display: path.basename(file.path) };
-            self.addItem(result); 
+        if (this.state === "done"){
+            this.clear();
+        }
+        var files = w.arrayify(e.dataTransfer.files);
+        files.forEach(function(file){
+            self.resultArray.push({ before: file.path });
         });
+        self.draw();
     };
-    
+
     $("#clearButton").addEventListener("click", this.clear.bind(this));
 
 }
 FileView.prototype.addItem = function(result){
-    if (this.listItems[result.before] === undefined) {
-        this.listItems[result.before] = result;
-    }
-    var item = this.listItems[result.before],
-        li = document.createElement("li");
-    li.textContent = item.display;
+    var li = document.createElement("li");
+    li.textContent = result.display;
     this.el.appendChild(li);
 };
 FileView.prototype.getFileArray = function(){
-    return Object.keys(this.listItems);
+    return this.resultArray.map(function(result){
+        return result.before;
+    });
 };
 FileView.prototype.clear = function(){
-    this.listItems = {};
+    this.state = null;
+    this.resultArray = [];
     this.el.innerHTML = "";
 };
 FileView.prototype.refresh = function(results){
@@ -54,6 +52,20 @@ FileView.prototype.refresh = function(results){
     this.clear();
     results.forEach(function(result){
         result.display = path.basename(result.after || result.before);
+        if (result.error){
+            result.display += " " + result.error;
+        }
+        self.addItem(result);
+    });
+};
+FileView.prototype.draw = function(results){
+    this.resultArray = results || this.resultArray;
+    var self = this;
+    
+    var commonDir = w.commonDir(this.resultArray.map(function(result){ return result.before; })) + path.sep;
+    
+    this.resultArray.forEach(function(result){
+        result.display = result.before.replace(commonDir, "");
         if (result.error){
             result.display += " " + result.error;
         }
