@@ -14,8 +14,8 @@ global.document = window.document;
 global.$ = $;
 
 /* cancel all default drag-drop behaviour */
-window.ondragover = function(e) { e.preventDefault(); return false };
-window.ondrop = function(e) { e.preventDefault(); return false };
+window.ondragover = function(e) { e.preventDefault(); return false; };
+window.ondrop = function(e) { e.preventDefault(); return false; };
 
 var fileView = new FileView($("#fileView"));
 

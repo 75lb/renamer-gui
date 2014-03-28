@@ -12,5 +12,8 @@
     "title": "Renamer",
     "toolbar": true,
     "position": "mouse"
+  },
+  "scripts": {
+      "lint": "jshint gui.js view/FileView.js"
   }
 }

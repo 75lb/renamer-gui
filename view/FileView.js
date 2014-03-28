@@ -1,6 +1,7 @@
 var w = require("wodge"),
     path = require("path"),
-    renamer = require("renamer");
+    renamer = require("renamer"),
+    $ = global.$;
 
 module.exports = FileView;
 
@@ -14,10 +15,10 @@ function FileView(el){
     this.state = null;
 
     this.el = el;
-    this.el.ondragover = function(e){
+    this.el.ondragover = function(){
         this.classList.add("dragOver");
     };
-    this.el.ondragleave = function(e){
+    this.el.ondragleave = function(){
         this.classList.remove("dragOver");
     };
     this.el.ondrop = function(e){
@@ -26,13 +27,16 @@ function FileView(el){
             this.state = null;
             this.results = new renamer.Results();
         }
-        var files = w.arrayify(e.dataTransfer.files)
+        w.arrayify(e.dataTransfer.files)
             .map(function(file){ return file.path; })
             .forEach(self.results.add.bind(self.results));
         self.draw();
     };
 
-    $("#clearButton").addEventListener("click", this.clear.bind(this));
+    $("#clearButton").addEventListener("click", function(){
+        self.results = new renamer.Results();
+        self.clear();
+    });
 
 }
 FileView.prototype.addItem = function(result){
