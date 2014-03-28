@@ -1,5 +1,6 @@
 var renamer = require("renamer"),
     RenamerOptions = renamer.RenamerOptions,
+    w = require("wodge"),
     FileView = require("./view/FileView"),
     $ = document.querySelector.bind(document),
     optionsForm = $("#optionsForm"),
@@ -7,7 +8,8 @@ var renamer = require("renamer"),
     replace = $("#replace"),
     regex = $("#regex"),
     insensitive = $("#insensitive"),
-    dryRun = $("#dryRun");
+    dryRun = $("#dryRun"),
+    fileViewList = $("#fileView");
 
 /* share access to the DOM with modules required */
 global.document = window.document;
@@ -17,7 +19,7 @@ global.$ = $;
 window.ondragover = function(e) { e.preventDefault(); return false; };
 window.ondrop = function(e) { e.preventDefault(); return false; };
 
-var fileView = new FileView($("#fileView"));
+var fileView = new FileView({ listElement: fileViewList });
 
 function getRenamerOptions(){
     return new RenamerOptions()
@@ -41,6 +43,25 @@ optionsForm.onsubmit = function(e){
     } else {
         results = renamer.rename(results);
     }
-    fileView.draw(results);
+    fileView.display(results);
     fileView.state = "done";
+};
+
+$("#clearButton").addEventListener("click", function(){
+    fileView.results = new renamer.Results();
+    fileView.clear();
+});
+
+fileViewList.ondragover = function(){
+    fileViewList.classList.add("dragOver");
+};
+fileViewList.ondragleave = function(){
+    fileViewList.classList.remove("dragOver");
+};
+fileViewList.ondrop = function(e){
+    fileViewList.classList.remove("dragOver");
+    w.arrayify(e.dataTransfer.files)
+        .map(function(file){ return file.path; })
+        .forEach(fileView.results.add.bind(fileView.results));
+    fileView.display();
 };

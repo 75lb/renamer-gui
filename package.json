@@ -14,6 +14,9 @@
     "position": "mouse"
   },
   "scripts": {
-      "lint": "jshint gui.js view/FileView.js"
+    "lint": "jshint gui.js view/FileView.js"
+  },
+  "devDependencies": {
+    "tape": "^2.12.0"
   }
 }
