@@ -1,12 +1,15 @@
 var w = require("wodge"),
-    path = require("path");
+    path = require("path"),
+    renamer = require("renamer");
 
 module.exports = FileView;
 
 function FileView(el){
     var self = this;
-    var resultArray = [];
-    this.resultArray = resultArray;
+    this.results = new renamer.Results();
+
+    window.results = this.results;
+    window.w = w;
     
     this.state = null;
 
@@ -20,12 +23,12 @@ function FileView(el){
     this.el.ondrop = function(e){
         this.classList.remove("dragOver");
         if (this.state === "done"){
-            this.clear();
+            this.state = null;
+            this.results = new renamer.Results();
         }
-        var files = w.arrayify(e.dataTransfer.files);
-        files.forEach(function(file){
-            self.resultArray.push({ before: file.path });
-        });
+        var files = w.arrayify(e.dataTransfer.files)
+            .map(function(file){ return file.path; })
+            .forEach(self.results.add.bind(self.results));
         self.draw();
     };
 
@@ -38,36 +41,24 @@ FileView.prototype.addItem = function(result){
     this.el.appendChild(li);
 };
 FileView.prototype.getFileArray = function(){
-    return this.resultArray.map(function(result){
-        return result.before;
-    });
+    return this.results.beforeList();
 };
 FileView.prototype.clear = function(){
-    this.state = null;
-    this.resultArray = [];
     this.el.innerHTML = "";
 };
-FileView.prototype.refresh = function(results){
+FileView.prototype.draw = function(results){
+    this.results = results || this.results;
     var self = this;
     this.clear();
-    results.forEach(function(result){
-        result.display = path.basename(result.after || result.before);
-        if (result.error){
-            result.display += " " + result.error;
-        }
-        self.addItem(result);
-    });
-};
-FileView.prototype.draw = function(results){
-    this.resultArray = results || this.resultArray;
-    var self = this;
     
-    var commonDir = w.commonDir(this.resultArray.map(function(result){ return result.before; })) + path.sep;
-    
-    this.resultArray.forEach(function(result){
+    var commonDir = w.commonDir(this.results.beforeList()) + path.sep;
+    this.results.list.forEach(function(result){
         result.display = result.before.replace(commonDir, "");
+        if (result.after) {
+            result.display += " -> " + result.after.replace(commonDir, "");
+        }
         if (result.error){
-            result.display += " " + result.error;
+            result.display += " (" + result.error + ")";
         }
         self.addItem(result);
     });

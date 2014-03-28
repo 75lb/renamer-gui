@@ -30,12 +30,10 @@ function getRenamerOptions(){
         });
 }
 
-
 optionsForm.onsubmit = function(e){
     e.preventDefault();
     var options = getRenamerOptions();
     options.files = fileView.getFileArray();
-
     var results = renamer.replace(options);
     results = renamer.replaceIndexToken(results);
     if (options["dry-run"]){

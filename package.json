@@ -9,6 +9,8 @@
     "wodge": "~0.4.0"
   },
   "window": {
-    "title": "Renamer"
+    "title": "Renamer",
+    "toolbar": true,
+    "position": "mouse"
   }
 }
