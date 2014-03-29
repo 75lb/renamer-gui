@@ -30,7 +30,6 @@ optionsForm.onsubmit = function(e){
     view.options.files = view.files.getFileArray();
     var results = renamer.replace(view.options);
     results = renamer.replaceIndexToken(results);
-    // console.log(results);return;
     if (view.options["dry-run"]){
         results = renamer.dryRun(results);
     } else {
@@ -53,7 +52,6 @@ fileViewList.ondragleave = function(){
 };
 fileViewList.ondrop = function(e){
     fileViewList.classList.remove("dragOver");
-    // console.log(w.arrayify(e.dataTransfer.files).map(function(file){ return file.path; }));
     w.arrayify(e.dataTransfer.files)
         .map(function(file){ return file.path; })
         .forEach(view.files.results.add.bind(view.files.results));

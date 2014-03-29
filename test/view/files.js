@@ -1,16 +1,18 @@
 var test = require("tape"),
-    renamer = require("renamer"),
-    Results = renamer.Results,
     Files = require("../../view/Files");
    
-test("files.display: simple", function(t){
+test("files", function(t){
     var ul = document.createElement("ul");
-    var files = new Files({ listElement: ul });
-    var results = new Results([
-        { before: "file1.txt" },
-        { before: "file2.txt" }
-    ]);
-    files.display(results);
-    t.equal(ul.children.length, 2);
+    var files = new Files({ listNode: ul });
+    
+    files.add([ "/home/Lloyd/file1.txt", "/home/tester/file2.txt" ]);
+    t.equal(ul.children.length, 2, ".add");
+    
+    t.deepEqual(files.files, [ "/home/Lloyd/file1.txt", "/home/tester/file2.txt" ], ".files");
+
+    files.clear();
+    t.equal(ul.children.length, 0, ".clear()");
+    t.deepEqual(files.files, [], ".clear()");
+    
     t.end();
 });

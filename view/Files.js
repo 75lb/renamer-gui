@@ -2,39 +2,22 @@ var w = require("wodge"),
     path = require("path"),
     renamer = require("renamer");
 
-module.exports = FileView;
+module.exports = Files;
 
-function FileView(options){
-    var self = this;
-    this.results = new renamer.Results();
-    this.state = null;
-    this.el = options.listElement;
+function Files(options){
+    var self = this,
+        listNode = options.listNode;
+    this.files = [];    
+    this.add = function(fileArray){
+        fileArray.forEach(function(file){
+            self.files.push(file);
+            var li = document.createElement("li");
+                li.textContent = file;
+                listNode.appendChild(li);
+        });
+    };
+    this.clear = function(){
+        this.files = [];
+        listNode.innerHTML = "";
+    };
 }
-FileView.prototype.addItem = function(result){
-    var li = document.createElement("li");
-    li.textContent = result.display;
-    this.el.appendChild(li);
-};
-FileView.prototype.getFileArray = function(){
-    return this.results.beforeList();
-};
-FileView.prototype.clear = function(){
-    this.el.innerHTML = "";
-};
-FileView.prototype.display = function(results){
-    this.results = results || this.results;
-    var self = this;
-    this.clear();
-    
-    var commonDir = w.commonDir(this.results.beforeList()) + path.sep;
-    this.results.list.forEach(function(result){
-        result.display = result.before.replace(commonDir, "");
-        if (result.after) {
-            result.display += " -> " + result.after.replace(commonDir, "");
-        }
-        if (result.error){
-            result.display += " (" + result.error + ")";
-        }
-        self.addItem(result);
-    });
-};

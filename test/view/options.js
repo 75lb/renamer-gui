@@ -1,6 +1,4 @@
 var test = require("tape"),
-    renamer = require("renamer"),
-    Results = renamer.Results,
     Options = require("../../view/Options");
    
 test("options: set and get", function(t){
