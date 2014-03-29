@@ -1,14 +1,9 @@
 var renamer = require("renamer"),
-    RenamerOptions = renamer.RenamerOptions,
     w = require("wodge"),
+    RenamerOptions = renamer.RenamerOptions,
     Files = require("./view/Files"),
+    Options = require("./view/Options"),
     $ = document.querySelector.bind(document),
-    optionsForm = $("#optionsForm"),
-    find = $("#find"),
-    replace = $("#replace"),
-    regex = $("#regex"),
-    insensitive = $("#insensitive"),
-    dryRun = $("#dryRun"),
     fileViewList = $("#fileView");
 
 /* share access to the DOM with modules required */
@@ -19,37 +14,35 @@ global.$ = $;
 window.ondragover = function(e) { e.preventDefault(); return false; };
 window.ondrop = function(e) { e.preventDefault(); return false; };
 
-var fileView = new Files({ listElement: fileViewList });
-
-function getRenamerOptions(){
-    return new RenamerOptions()
-        .set({
-            "dry-run": dryRun.checked,
-            find: find.value,
-            replace: replace.value,
-            regex: regex.checked,
-            insensitive: insensitive.checked
-        });
-}
+var view = {
+    files: new Files({ listElement: fileViewList }),
+    options: new Options({
+        find: $("#find"),
+        replace: $("#replace"),
+        regex: $("#regex"),
+        insensitive: $("#insensitive"),
+        dryRun: $("#dryRun")
+    })
+};
 
 optionsForm.onsubmit = function(e){
     e.preventDefault();
-    var options = getRenamerOptions();
-    options.files = fileView.getFileArray();
-    var results = renamer.replace(options);
+    view.options.files = view.files.getFileArray();
+    var results = renamer.replace(view.options);
     results = renamer.replaceIndexToken(results);
-    if (options["dry-run"]){
+    // console.log(results);return;
+    if (view.options["dry-run"]){
         results = renamer.dryRun(results);
     } else {
         results = renamer.rename(results);
     }
-    fileView.display(results);
-    fileView.state = "done";
+    view.files.display(results);
+    view.files.state = "done";
 };
 
 $("#clearButton").addEventListener("click", function(){
-    fileView.results = new renamer.Results();
-    fileView.clear();
+    view.files.results = new renamer.Results();
+    view.files.clear();
 });
 
 fileViewList.ondragover = function(){
@@ -60,8 +53,9 @@ fileViewList.ondragleave = function(){
 };
 fileViewList.ondrop = function(e){
     fileViewList.classList.remove("dragOver");
+    // console.log(w.arrayify(e.dataTransfer.files).map(function(file){ return file.path; }));
     w.arrayify(e.dataTransfer.files)
         .map(function(file){ return file.path; })
-        .forEach(fileView.results.add.bind(fileView.results));
-    fileView.display();
+        .forEach(view.files.results.add.bind(view.files.results));
+    view.files.display();
 };
