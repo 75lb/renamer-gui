@@ -1,7 +1,7 @@
 var renamer = require("renamer"),
     RenamerOptions = renamer.RenamerOptions,
     w = require("wodge"),
-    FileView = require("./view/FileView"),
+    Files = require("./view/Files"),
     $ = document.querySelector.bind(document),
     optionsForm = $("#optionsForm"),
     find = $("#find"),
@@ -19,7 +19,7 @@ global.$ = $;
 window.ondragover = function(e) { e.preventDefault(); return false; };
 window.ondrop = function(e) { e.preventDefault(); return false; };
 
-var fileView = new FileView({ listElement: fileViewList });
+var fileView = new Files({ listElement: fileViewList });
 
 function getRenamerOptions(){
     return new RenamerOptions()

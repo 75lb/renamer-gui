@@ -14,6 +14,7 @@
     "position": "mouse"
   },
   "scripts": {
+    "test": "tape test/*.js; browserify test/view/*.js | testling",
     "lint": "jshint gui.js view/FileView.js"
   },
   "devDependencies": {
