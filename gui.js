@@ -3,19 +3,15 @@ var renamer = require("renamer"),
     RenamerOptions = renamer.RenamerOptions,
     Files = require("./view/Files"),
     Options = require("./view/Options"),
-    $ = document.querySelector.bind(document),
-    fileViewList = $("#fileView");
+    $ = document.querySelector.bind(document);
 
 /* share access to the DOM with modules required */
 global.document = window.document;
 global.$ = $;
 
-/* cancel all default drag-drop behaviour */
-window.ondragover = function(e) { e.preventDefault(); return false; };
-window.ondrop = function(e) { e.preventDefault(); return false; };
 
 var view = {
-    files: new Files({ listElement: fileViewList }),
+    files: new Files({ listNode: $("#view-files") }),
     options: new Options({
         find: $("#find"),
         replace: $("#replace"),
@@ -44,16 +40,18 @@ $("#clearButton").addEventListener("click", function(){
     view.files.clear();
 });
 
-fileViewList.ondragover = function(){
-    fileViewList.classList.add("dragOver");
+window.ondragover = function(e){
+    e.preventDefault();
+    view.files.listNode.classList.add("dragOver");
 };
-fileViewList.ondragleave = function(){
-    fileViewList.classList.remove("dragOver");
+window.ondragleave = function(e){
+    e.preventDefault();
+    view.files.listNode.classList.remove("dragOver");
 };
-fileViewList.ondrop = function(e){
-    fileViewList.classList.remove("dragOver");
+window.ondrop = function(e){
+    e.preventDefault();
+    view.files.listNode.classList.remove("dragOver");
     w.arrayify(e.dataTransfer.files)
         .map(function(file){ return file.path; })
-        .forEach(view.files.results.add.bind(view.files.results));
-    view.files.display();
+        .forEach(view.files.add);
 };

@@ -5,19 +5,17 @@ var w = require("wodge"),
 module.exports = Files;
 
 function Files(options){
-    var self = this,
-        listNode = options.listNode;
+    var self = this;
+    this.listNode = options.listNode;
     this.files = [];    
-    this.add = function(fileArray){
-        fileArray.forEach(function(file){
-            self.files.push(file);
-            var li = document.createElement("li");
-                li.textContent = file;
-                listNode.appendChild(li);
-        });
+    this.add = function(file){
+        self.files.push(file);
+        var li = document.createElement("li");
+        li.textContent = file;
+        self.listNode.appendChild(li);
     };
     this.clear = function(){
-        this.files = [];
-        listNode.innerHTML = "";
+        self.files = [];
+        self.listNode.innerHTML = "";
     };
 }
