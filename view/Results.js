@@ -1,32 +1,22 @@
 var w = require("wodge"),
-    path = require("path"),
-    renamer = require("renamer");
+    path = require("path");
 
-module.exports = FileView;
+module.exports = Results;
 
-function FileView(options){
-    var self = this;
-    this.results = new renamer.Results();
-    this.state = null;
-    this.el = options.listElement;
+function Results(options){
+    this.resultsNode = options.resultsNode;
 }
-FileView.prototype.addItem = function(result){
-    var li = document.createElement("li");
-    li.textContent = result.display;
-    this.el.appendChild(li);
+Results.prototype.clear = function(){
+    this.resultsNode.innerHTML = "";
 };
-FileView.prototype.getFileArray = function(){
-    return this.results.beforeList();
-};
-FileView.prototype.clear = function(){
-    this.el.innerHTML = "";
-};
-FileView.prototype.display = function(results){
+Results.prototype.display = function(results){
     this.results = results || this.results;
     var self = this;
     this.clear();
-    
+    console.log(this.results.beforeList())
+    return;
     var commonDir = w.commonDir(this.results.beforeList()) + path.sep;
+    console.log("ONNI")
     this.results.list.forEach(function(result){
         result.display = result.before.replace(commonDir, "");
         if (result.after) {
@@ -35,6 +25,8 @@ FileView.prototype.display = function(results){
         if (result.error){
             result.display += " (" + result.error + ")";
         }
-        self.addItem(result);
+        var li = document.createElement("li");
+        li.textContent = result.display;
+        self.el.appendChild(li);
     });
 };

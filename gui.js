@@ -36,7 +36,6 @@ optionsForm.onsubmit = function(e){
 };
 
 $("#clearButton").addEventListener("click", function(){
-    view.files.results = new renamer.Results();
     view.files.clear();
 });
 
