@@ -1,5 +1,4 @@
-var w = require("wodge"),
-    path = require("path");
+var w = require("wodge");
 
 module.exports = Results;
 

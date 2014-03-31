@@ -1,7 +1,6 @@
 var w = require("wodge"),
     renamer = require("renamer"),
-    Results = renamer.Results,
-    path = require("path");
+    Results = renamer.Results;
 
 module.exports = Files;
 

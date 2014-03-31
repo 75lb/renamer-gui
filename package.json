@@ -15,7 +15,8 @@
   },
   "scripts": {
     "test": "tape test/*.js; browserify test/view/*.js | testling",
-    "lint": "jshint gui.js view/FileView.js"
+    "lint": "jshint *.js view/*.js; echo; ",
+    "sass": "sw -I ../wardrobe/ gui.scss"
   },
   "devDependencies": {
     "tape": "^2.12.0"

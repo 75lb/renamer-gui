@@ -1,7 +1,4 @@
 var renamer = require("renamer"),
-    Results = renamer.Results,
-    w = require("wodge"),
-    RenamerOptions = renamer.RenamerOptions,
     Files = require("./view/Files"),
     ResultsView = require("./view/Results"),
     Options = require("./view/Options"),
@@ -23,7 +20,7 @@ var view = {
     results: new ResultsView({ node: $("#view-results") })
 };
 
-optionsForm.onsubmit = function(e){
+$("#optionsForm").onsubmit = function(e){
     e.preventDefault();
     view.options.files = view.files.files;
     var results = renamer.replace(view.options);
