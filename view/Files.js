@@ -18,7 +18,7 @@ function Files(options){
                 return file.path;
             });
         }
-        files = files.concat(newFiles);
+        files = w.union(files, newFiles);
 
         var commonDir = w.commonDir(files);
         var shortFiles = files.map(function(file){

@@ -1,15 +1,20 @@
-#view-files {
-    background-color: yellow;
-    min-height: 10em;
-    &.dragOver { 
-        background-color: orange;
-    }
-}
-#view-results {
-    background-color: orange;
-    min-height: 10em;
-    &.dragOver { 
-        background-color: red;
-    }
-}
+@import "grid", "list";
 
+.mainPanel {
+    @extend .grid;
+    
+    #view-files {
+        background-color: yellow;
+        min-height: 10em;
+        &.dragOver { 
+            background-color: orange;
+        }
+    }
+    #view-results {
+        background-color: orange;
+        min-height: 10em;
+        &.dragOver { 
+            background-color: red;
+        }
+    }
+}
