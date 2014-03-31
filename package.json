@@ -4,22 +4,23 @@
   "description": "Batch rename files and folders",
   "main": "index.html",
   "author": "Lloyd Brookes",
-  "dependencies": {
-    "renamer": "~0.4",
-    "wodge": "~0.4.0"
-  },
   "window": {
     "title": "Renamer",
-    "toolbar": true,
-    "position": "mouse"
+    "toolbar": false,
+    "position": "mouse",
+    "frame": true
   },
   "scripts": {
     "test": "tape test/*.js; browserify test/view/*.js | testling",
     "lint": "jshint *.js view/*.js; echo; ",
     "sass": "sass --watch --sourcemap -I ../wardrobe/ gui.scss"
   },
+  "dependencies": {
+    "renamer": "~0.4",
+    "wodge": "~0.5.0"
+  },
   "devDependencies": {
-    "tape": "^2.12.0",
+    "tape": "~2.12.0",
     "wardrobe": "0.0.3"
   }
 }
