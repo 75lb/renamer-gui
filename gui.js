@@ -32,12 +32,15 @@ optionsForm.onsubmit = function(e){
         results = renamer.dryRun(results);
     } else {
         results = renamer.rename(results);
+        view.files.clear();
+        view.files.add(results.afterList());
     }
     view.results.display(results);
 };
 
 $("#clearButton").addEventListener("click", function(){
     view.files.clear();
+    view.results.clear();
 });
 
 window.ondragover = function(e){

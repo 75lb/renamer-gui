@@ -12,11 +12,16 @@ Results.prototype.clear = function(){
 Results.prototype.display = function(results){
     var self = this;
     this.clear();
-    this.results.removeCommonDir();
-    this.results.list.forEach(function(result){
-        if (result.after) {
-            result.display += " -> " + result.after;
-        }
+
+    var commonDir = w.commonDir(results.beforeList());
+    results.list = results.list.map(function(result){
+        result.shortBefore = result.before.replace(commonDir, "");
+        result.shortAfter = result.after ? result.after.replace(commonDir, "") : "";
+        return result;
+    });
+
+    results.list.forEach(function(result){
+        result.display = result.shortAfter || result.shortBefore;
         if (result.error){
             result.display += " (" + result.error + ")";
         }
