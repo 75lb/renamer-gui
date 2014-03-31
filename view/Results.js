@@ -10,7 +10,6 @@ Results.prototype.clear = function(){
     this.node.innerHTML = "";
 };
 Results.prototype.display = function(results){
-    this.results = results || this.results;
     var self = this;
     this.clear();
     this.results.removeCommonDir();

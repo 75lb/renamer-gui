@@ -1,13 +1,15 @@
 var renamer = require("renamer"),
+    Results = renamer.Results,
     w = require("wodge"),
     RenamerOptions = renamer.RenamerOptions,
     Files = require("./view/Files"),
-    Results = require("./view/Results"),
+    ResultsView = require("./view/Results"),
     Options = require("./view/Options"),
     $ = document.querySelector.bind(document);
 
 /* share access to the DOM with the required-in modules */
 global.document = window.document;
+global.window = window;
 
 var view = {
     files: new Files({ node: $("#view-files") }),
@@ -18,7 +20,7 @@ var view = {
         insensitive: $("#insensitive"),
         dryRun: $("#dryRun")
     }),
-    results: new Results({ node: $("#view-results") })
+    results: new ResultsView({ node: $("#view-results") })
 };
 
 optionsForm.onsubmit = function(e){
@@ -40,16 +42,15 @@ $("#clearButton").addEventListener("click", function(){
 
 window.ondragover = function(e){
     e.preventDefault();
-    view.files.listNode.classList.add("dragOver");
+    view.files.node.classList.add("dragOver");
 };
 window.ondragleave = function(e){
     e.preventDefault();
-    view.files.listNode.classList.remove("dragOver");
+    view.files.node.classList.remove("dragOver");
 };
 window.ondrop = function(e){
     e.preventDefault();
-    view.files.listNode.classList.remove("dragOver");
-    w.arrayify(e.dataTransfer.files)
-        .map(function(file){ return file.path; })
-        .forEach(view.files.add);
+    view.results.clear();
+    view.files.node.classList.remove("dragOver");
+    view.files.add(e.dataTransfer.files);
 };

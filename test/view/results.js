@@ -1,8 +1,9 @@
 var test = require("tape"),
     Results = require("renamer").Results,
     ResultsView = require("../../view/Results");
-   
-test("results", function(t){
+
+/* display results from renamer.rename() or .dryRun() */
+test("results: .display(), .clear()", function(t){
     var resultsNode = document.createElement("ul"),
         resultsView = new ResultsView({ node: resultsNode }),
         results = new Results([
