@@ -4,15 +4,15 @@ var test = require("tape"),
    
 test("results", function(t){
     var resultsNode = document.createElement("ul"),
-        resultsView = new ResultsView({ resultsNode: resultsNode }),
+        resultsView = new ResultsView({ node: resultsNode }),
         results = new Results([
             { before: "file1.txt", after: "clive1.txt" },
             { before: "file2.txt", after: "clive2.txt" }
         ]);
     resultsView.display(results);
-    t.equal(resultsNode.children.length, 2);
+    t.equal(resultsNode.children.length, 2, ".display()");
     
-    // resultsView.clear();
-    // t.equal(resultsNode.children.length, 0);
+    resultsView.clear();
+    t.equal(resultsNode.children.length, 0, ".clear()");
     t.end();
 });

@@ -2,28 +2,28 @@ var renamer = require("renamer"),
     w = require("wodge"),
     RenamerOptions = renamer.RenamerOptions,
     Files = require("./view/Files"),
+    Results = require("./view/Results"),
     Options = require("./view/Options"),
     $ = document.querySelector.bind(document);
 
-/* share access to the DOM with modules required */
+/* share access to the DOM with the required-in modules */
 global.document = window.document;
-global.$ = $;
-
 
 var view = {
-    files: new Files({ listNode: $("#view-files") }),
+    files: new Files({ node: $("#view-files") }),
     options: new Options({
         find: $("#find"),
         replace: $("#replace"),
         regex: $("#regex"),
         insensitive: $("#insensitive"),
         dryRun: $("#dryRun")
-    })
+    }),
+    results: new Results({ node: $("#view-results") })
 };
 
 optionsForm.onsubmit = function(e){
     e.preventDefault();
-    view.options.files = view.files.getFileArray();
+    view.options.files = view.files.files;
     var results = renamer.replace(view.options);
     results = renamer.replaceIndexToken(results);
     if (view.options["dry-run"]){
@@ -31,8 +31,7 @@ optionsForm.onsubmit = function(e){
     } else {
         results = renamer.rename(results);
     }
-    view.files.display(results);
-    view.files.state = "done";
+    view.results.display(results);
 };
 
 $("#clearButton").addEventListener("click", function(){

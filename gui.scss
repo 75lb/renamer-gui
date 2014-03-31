@@ -5,3 +5,10 @@
         background-color: orange;
     }
 }
+#view-results {
+    background-color: orange;
+    min-height: 10em;
+    &.dragOver { 
+        background-color: red;
+    }
+}

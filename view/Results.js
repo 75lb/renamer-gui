@@ -4,19 +4,16 @@ var w = require("wodge"),
 module.exports = Results;
 
 function Results(options){
-    this.resultsNode = options.resultsNode;
+    this.node = options.node;
 }
 Results.prototype.clear = function(){
-    this.resultsNode.innerHTML = "";
+    this.node.innerHTML = "";
 };
 Results.prototype.display = function(results){
     this.results = results || this.results;
     var self = this;
     this.clear();
-    console.log(this.results.beforeList())
-    return;
-    var commonDir = w.commonDir(this.results.beforeList()) + path.sep;
-    console.log("ONNI")
+    var commonDir = w.commonDir(this.results.beforeList());
     this.results.list.forEach(function(result){
         result.display = result.before.replace(commonDir, "");
         if (result.after) {
@@ -27,6 +24,6 @@ Results.prototype.display = function(results){
         }
         var li = document.createElement("li");
         li.textContent = result.display;
-        self.el.appendChild(li);
+        self.node.appendChild(li);
     });
 };

@@ -3,3 +3,9 @@
   min-height: 10em; }
   #view-files.dragOver {
     background-color: orange; }
+
+#view-results {
+  background-color: orange;
+  min-height: 10em; }
+  #view-results.dragOver {
+    background-color: red; }
