@@ -7,13 +7,14 @@ module.exports = Files;
 function Files(options){
     var self = this;
     this.node = options.node;
-    this.files = [];    
-    this.add = function(files){
-        self.node.innerHTML = "";
-        w.arrayify(files).forEach(function(file){
-            self.files.push(file);
+    this.results = null;
+    this.add = function(results){
+        this.node.innerHTML = "";
+        this.results = results;
+        this.results.removeCommonDir();
+        this.results.list.forEach(function(result){
             var li = document.createElement("li");
-            li.textContent = file;
+            li.textContent = result.display;
             self.node.appendChild(li);
         });
     };

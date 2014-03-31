@@ -13,11 +13,10 @@ Results.prototype.display = function(results){
     this.results = results || this.results;
     var self = this;
     this.clear();
-    var commonDir = w.commonDir(this.results.beforeList());
+    this.results.removeCommonDir();
     this.results.list.forEach(function(result){
-        result.display = result.before.replace(commonDir, "");
         if (result.after) {
-            result.display += " -> " + result.after.replace(commonDir, "");
+            result.display += " -> " + result.after;
         }
         if (result.error){
             result.display += " (" + result.error + ")";
