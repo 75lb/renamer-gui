@@ -2,18 +2,18 @@
   "name": "renamer-gui",
   "version": "0.0.0",
   "description": "Batch rename files and folders",
-  "main": "index.html",
+  "main": "renamer-gui.html",
   "author": "Lloyd Brookes",
   "window": {
     "title": "Renamer",
-    "toolbar": false,
+    "toolbar": true,
     "position": "mouse",
     "frame": true
   },
   "scripts": {
-    "test": "tape test/*.js; browserify test/view/*.js | testling",
-    "lint": "jshint *.js view/*.js; echo; ",
-    "sass": "sass --watch --sourcemap -I ../wardrobe/ gui.scss"
+    "test": "browserify test/view/*.js | testling",
+    "lint": "jshint assets/js/**/*.js; echo; ",
+    "sass": "sass --watch --sourcemap -I node_modules/wardrobe/ assets/style/renamer-gui.scss"
   },
   "dependencies": {
     "renamer": "~0.4",

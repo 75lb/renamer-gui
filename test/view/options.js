@@ -1,5 +1,5 @@
 var test = require("tape"),
-    Options = require("../../view/Options");
+    Options = require("../../assets/js/view/Options");
    
 test("options: set and get", function(t){
     var form = document.createElement("input");

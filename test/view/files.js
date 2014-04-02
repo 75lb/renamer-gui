@@ -1,12 +1,12 @@
 var test = require("tape"),
     Results = require("renamer").Results,
-    Files = require("../../view/Files");
+    Files = require("../../assets/js/view/Files");
 
 /* 
 Files view populated by dragdrop FileList objects, needs to return renamerOptions.files.
 unfortunately can't test .add(FileList) from JS 
 */
-test.only("files: .add(FileList | files<string>), clear() and .files", function(t){
+test("files: .add(FileList | files<string>), clear() and .files", function(t){
     var ul = document.createElement("ul");
     var files = new Files({ node: ul });
 

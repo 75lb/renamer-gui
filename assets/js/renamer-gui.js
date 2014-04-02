@@ -1,7 +1,7 @@
 var renamer = require("renamer"),
-    Files = require("./view/Files"),
-    ResultsView = require("./view/Results"),
-    Options = require("./view/Options"),
+    Files = require("./assets/js/view/Files"),
+    ResultsView = require("./assets/js/view/Results"),
+    Options = require("./assets/js/view/Options"),
     $ = document.querySelector.bind(document);
 
 /* share access to the DOM with the required-in modules */

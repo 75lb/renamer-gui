@@ -1,6 +1,6 @@
 var test = require("tape"),
     Results = require("renamer").Results,
-    ResultsView = require("../../view/Results");
+    ResultsView = require("../../assets/js/view/Results");
 
 /* display results from renamer.rename() or .dryRun() */
 test("results: .display(), .clear()", function(t){

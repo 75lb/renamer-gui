@@ -2,3 +2,4 @@ node_modules
 test/fixture/*
 .DS_Store
 out
+.css.map
