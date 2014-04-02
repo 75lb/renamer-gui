@@ -2,7 +2,7 @@
   "name": "renamer-gui",
   "version": "0.0.0",
   "description": "Batch rename files and folders",
-  "main": "renamer-gui.html",
+  "main": "index.html",
   "author": "Lloyd Brookes",
   "window": {
     "title": "Renamer",
@@ -22,5 +22,6 @@
   "devDependencies": {
     "tape": "~2.12.0",
     "wardrobe": "0.0.3"
-  }
+  },
+  "local-web-server": { "port": 8010 }
 }

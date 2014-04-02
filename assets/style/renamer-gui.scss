@@ -1,5 +1,10 @@
 @import "grid", "list";
 
+html {
+    font-size: 18px;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
 .mainPanel {
     @extend .grid;
     
@@ -17,4 +22,8 @@
             background-color: red;
         }
     }
+}
+
+input:invalid {
+    border: 1px solid red;
 }

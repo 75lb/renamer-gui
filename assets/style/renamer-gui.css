@@ -164,6 +164,10 @@
   display: inline-block;
   margin-right: 1em; }
 
+html {
+  font-size: 18px;
+  font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; }
+
 .mainPanel #view-files {
   background-color: yellow;
   min-height: 10em; }
@@ -174,5 +178,8 @@
   min-height: 10em; }
   .mainPanel #view-results.dragOver {
     background-color: red; }
+
+input:invalid {
+  border: 1px solid red; }
 
 /*# sourceMappingURL=renamer-gui.css.map */

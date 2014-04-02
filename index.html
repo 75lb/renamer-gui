@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Renamer</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/style/renamer-gui.css" type="text/css">
+  </head>
+  <body>
+    <form id="optionsForm" autocomplete="on">
+      <fieldset>
+        <legend>Renamer</legend>
+        <label>Find <input type="search" id="find" placeHolder="String or regular expression to replace" size="100" autofocus required></label>
+        <label>Replace <input type="text" id="replace" placeHolder="Replacement text"></label>
+        <label>RegEx <input type="checkbox" id="regex"></label>
+        <label>Case Insensitive <input type="checkbox" id="insensitive"></label>
+        <label>Dry Run <input type="checkbox" id="dryRun" checked="checked"></label>
+        <button type="submit">Rename</button>
+        <button id="clearButton" type="reset">Clear</button>
+        <progress value="70" max="100">70%</progress>
+      </fieldset>
+      <output class="mainPanel">
+        <ul id="view-files" class="one-half clean-list"></ul><ul id="view-results" class="one-half clean-list"></ul>
+      </output>
+    </form>
+    <script src="assets/js/renamer-gui.js"></script>
+  </body>
+</html>
