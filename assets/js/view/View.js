@@ -3,7 +3,7 @@ var EventEmitter = require("events").EventEmitter,
 
 module.exports = View;
 
-function View(options){
+function View(){
 }
 util.inherits(View, EventEmitter);
 

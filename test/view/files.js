@@ -1,5 +1,4 @@
 var test = require("tape"),
-    Results = require("renamer").Results,
     Files = require("../../assets/js/view/Files");
 
 /* 

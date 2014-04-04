@@ -2,7 +2,6 @@ var test = require("tape"),
     Options = require("../../assets/js/view/Options");
    
 test("options: set and get", function(t){
-    var form = document.createElement("input");
     var el = {
         find: document.createElement("input"),
         replace: document.createElement("input"),
