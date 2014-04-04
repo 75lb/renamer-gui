@@ -229,7 +229,8 @@ output {
   -moz-justify-content: center;
   justify-content: center;
   border: 1px solid brown;
-  position: relative; }
+  position: relative;
+  overflow: scroll; }
   output ul {
     position: absolute;
     bottom: 0;

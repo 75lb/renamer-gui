@@ -1,8 +1,16 @@
+var View = require("./View"),
+    util = require("util");
+
 module.exports = Options;
 
 function Options(elements){
-    var el = elements;
+    var el = elements,
+        self = this;
     this.node = elements.node;
+    this.node.onsubmit = function(e){
+        self.emit("submit", e);
+    };
+    
     Object.defineProperty(this, "find", {
         enumerable: true,
         set: function setFind(val){
@@ -49,3 +57,4 @@ function Options(elements){
         }
     });
 }
+util.inherits(Options, View);

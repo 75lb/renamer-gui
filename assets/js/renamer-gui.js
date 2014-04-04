@@ -45,10 +45,22 @@ window.ondrop = function(e){
 };
 
 /* RENAME */
-$("form").onsubmit = function(e){
+view.options.on("submit", function(e){
     e.preventDefault();
     view.options.files = view.files.files;
-    var results = renamer.replace(view.options);
+
+    view.results.show(true);
+    view.files.show(false);
+    
+    /* TODO: nature option to ignore undefined properties, like ".node" */
+    var results = renamer.replace({
+        find: view.options.find,
+        replace: view.options.replace,
+        insensitive: view.options.insensitive,
+        "dry-run": view.options["dry-run"],
+        regex: view.options.regex
+    });
+    
     results = renamer.replaceIndexToken(results);
     if (view.options["dry-run"]){
         results = renamer.dryRun(results);
@@ -58,7 +70,7 @@ $("form").onsubmit = function(e){
         view.files.add(results.afterList());
     }
     view.results.display(results);
-};
+});
 
 view.results.show(false);
 view.files.show(false);
