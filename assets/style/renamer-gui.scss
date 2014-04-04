@@ -13,8 +13,10 @@ body {
     left: 0;
     bottom: 0;
     margin: 0;
+    padding: 0.2em; 
 }
 
+// TOP
 header {
     @include flex(0 0 3em);
     border: 1px solid grey;
@@ -27,29 +29,47 @@ header {
     }    
 }
 
+// MIDDLE
 output {
-    @include flex(1 0);
+    @include flex(1 1 auto);
+    @extend %flexbox-row;
+    @include align-items(center);
+    @include justify-content(center);
+    
     border: 1px solid brown;
+    position: relative;
+    
+    ul {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        right: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+    }
+    ul.hide { display: none; }
     
     #view-files {
         background-color: yellow;
-        min-height: 10em;
         &.dragOver { 
             background-color: orange;
         }
     }
     #view-results {
         background-color: orange;
-        min-height: 10em;
         &.dragOver { 
             background-color: red;
         }
     }
 }
 
+// BOTTOM
 form {
-    @include flex(0 1 13em);
+    @include flex(0 0 0em);
     border: 1px solid grey;
+    overflow: hidden;
+    -webkit-transition-duration: 0.3s;
     
     div[role=group] {
         border: none;
@@ -58,6 +78,7 @@ form {
         label {
             display: block;
             width: 100%;
+            margin: 0.2em 0;
             input {
                 width: 100%;
                 font-size: inherit;
@@ -87,4 +108,8 @@ form {
 
 :invalid {
     border: 1px solid red;
+}
+
+.centredPanel { 
+    @include flex(0 0 auto);
 }

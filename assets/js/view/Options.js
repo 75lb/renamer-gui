@@ -2,6 +2,7 @@ module.exports = Options;
 
 function Options(elements){
     var el = elements;
+    this.node = elements.node;
     Object.defineProperty(this, "find", {
         enumerable: true,
         set: function setFind(val){

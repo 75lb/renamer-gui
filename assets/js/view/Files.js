@@ -4,18 +4,21 @@ var w = require("wodge"),
 
 module.exports = Files;
 
+/** Displays the input files selected by the user. */
 function Files(options){
     var self = this;
     this.node = options.node;
+    
+    /** An array of files selected by the user */
     this.files = [];
-    this.results = new Results();
+
     this.add = function(newFiles){
         this.node.innerHTML = "";
         var files = this.files;
 
         if (newFiles instanceof window.FileList){
             newFiles = w.arrayify(newFiles).map(function(file){
-                return file.path;
+                return file.path || file.name;
             });
         }
         files = w.union(files, newFiles);
@@ -32,8 +35,16 @@ function Files(options){
         
         this.files = files;
     };
+    
     this.clear = function(){
         this.files = [];
         this.node.innerHTML = "";
     };
 }
+Files.prototype.show = function(show){
+    if (show){
+        this.node.classList.remove("hide");
+    } else {
+        this.node.classList.add("hide");
+    }
+};

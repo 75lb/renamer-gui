@@ -1,7 +1,7 @@
 var renamer = require("renamer"),
-    Files = require("./assets/js/view/Files"),
-    ResultsView = require("./assets/js/view/Results"),
-    Options = require("./assets/js/view/Options"),
+    Files = require("./view/Files"),
+    ResultsView = require("./view/Results"),
+    Options = require("./view/Options"),
     $ = document.querySelector.bind(document);
 
 /* share access to the DOM with the required-in modules */
@@ -11,6 +11,7 @@ global.window = window;
 var view = {
     files: new Files({ node: $("#view-files") }),
     options: new Options({
+        node: $("form"),
         find: $("#find"),
         replace: $("#replace"),
         regex: $("#regex"),
@@ -18,21 +19,6 @@ var view = {
         dryRun: $("#dryRun")
     }),
     results: new ResultsView({ node: $("#view-results") })
-};
-
-$("form").onsubmit = function(e){
-    e.preventDefault();
-    view.options.files = view.files.files;
-    var results = renamer.replace(view.options);
-    results = renamer.replaceIndexToken(results);
-    if (view.options["dry-run"]){
-        results = renamer.dryRun(results);
-    } else {
-        results = renamer.rename(results);
-        view.files.clear();
-        view.files.add(results.afterList());
-    }
-    view.results.display(results);
 };
 
 $("#clearButton").addEventListener("click", function(){
@@ -53,4 +39,27 @@ window.ondrop = function(e){
     view.results.clear();
     view.files.node.classList.remove("dragOver");
     view.files.add(e.dataTransfer.files);
+
+    view.files.show(true);
+    // view.options.node.style.flexBasis = "11em";
 };
+
+/* RENAME */
+$("form").onsubmit = function(e){
+    e.preventDefault();
+    view.options.files = view.files.files;
+    var results = renamer.replace(view.options);
+    results = renamer.replaceIndexToken(results);
+    if (view.options["dry-run"]){
+        results = renamer.dryRun(results);
+    } else {
+        results = renamer.rename(results);
+        view.files.clear();
+        view.files.add(results.afterList());
+    }
+    view.results.display(results);
+};
+
+view.results.show(false);
+view.files.show(false);
+view.options.node.style.flexBasis = "11em";

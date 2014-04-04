@@ -1,10 +1,14 @@
-var w = require("wodge");
+var w = require("wodge"),
+    View = require("./View"),
+    util = require("util");
 
 module.exports = Results;
 
 function Results(options){
     this.node = options.node;
 }
+util.inherits(Results, View);
+
 Results.prototype.clear = function(){
     this.node.innerHTML = "";
 };

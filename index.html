@@ -10,12 +10,14 @@
       <h1>renamer</h1>
     </header>
     <output>
-      <ul id="view-files" class="one-half clean-list"></ul><ul id="view-results" class="one-half clean-list"></ul>
+      <ul id="view-files"></ul>
+      <ul id="view-results"></ul>
+      <p class="centredPanel">Drop files here</p>
     </output>
     <form autocomplete="on">
       <div role="group">
-        <label>Find <input type="search" id="find" placeHolder="String or regular expression to replace" title="The text string to find in the filename" autofocus></label>
-        <label>Replace <input type="text" id="replace" placeHolder="Replacement text"></label>
+        <label>Find: <input type="search" id="find" placeHolder="String or regular expression to replace" title="The text string to find in the filename" autofocus></label>
+        <label>Replace: <input type="text" id="replace" placeHolder="Replacement text"></label>
       </div>
       <div role="group">
         <label>Regular Expression <input type="checkbox" id="regex"></label>
@@ -28,6 +30,6 @@
         <button id="rename" type="submit">Rename</button>
       </div>
     </form>
-    <script src="assets/js/renamer-gui.js"></script>
+    <script src="assets/js/bundle.js"></script>
   </body>
 </html>
