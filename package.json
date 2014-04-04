@@ -8,7 +8,9 @@
     "title": "Renamer",
     "toolbar": true,
     "position": "mouse",
-    "frame": true
+    "frame": true,
+    "width": 504,
+    "height": 630
   },
   "scripts": {
     "test": "browserify test/view/*.js | testling",

@@ -6,21 +6,27 @@
     <link rel="stylesheet" href="assets/style/renamer-gui.css" type="text/css">
   </head>
   <body>
-    <form id="optionsForm" autocomplete="on">
-      <fieldset>
-        <legend>Renamer</legend>
-        <label>Find <input type="search" id="find" placeHolder="String or regular expression to replace" size="100" autofocus required></label>
+    <header>
+      <h1>renamer</h1>
+    </header>
+    <output>
+      <ul id="view-files" class="one-half clean-list"></ul><ul id="view-results" class="one-half clean-list"></ul>
+    </output>
+    <form autocomplete="on">
+      <div role="group">
+        <label>Find <input type="search" id="find" placeHolder="String or regular expression to replace" title="The text string to find in the filename" autofocus></label>
         <label>Replace <input type="text" id="replace" placeHolder="Replacement text"></label>
-        <label>RegEx <input type="checkbox" id="regex"></label>
-        <label>Case Insensitive <input type="checkbox" id="insensitive"></label>
+      </div>
+      <div role="group">
+        <label>Regular Expression <input type="checkbox" id="regex"></label>
+        <label>Case-insensitive <input type="checkbox" id="insensitive"></label>
         <label>Dry Run <input type="checkbox" id="dryRun" checked="checked"></label>
-        <button type="submit">Rename</button>
-        <button id="clearButton" type="reset">Clear</button>
+      </div>
+      <div role="group">
         <progress value="70" max="100">70%</progress>
-      </fieldset>
-      <output class="mainPanel">
-        <ul id="view-files" class="one-half clean-list"></ul><ul id="view-results" class="one-half clean-list"></ul>
-      </output>
+        <button id="clearButton" type="reset">Clear</button>
+        <button id="rename" type="submit">Rename</button>
+      </div>
     </form>
     <script src="assets/js/renamer-gui.js"></script>
   </body>

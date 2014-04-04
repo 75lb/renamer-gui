@@ -20,7 +20,7 @@ var view = {
     results: new ResultsView({ node: $("#view-results") })
 };
 
-$("#optionsForm").onsubmit = function(e){
+$("form").onsubmit = function(e){
     e.preventDefault();
     view.options.files = view.files.files;
     var results = renamer.replace(view.options);
