@@ -19,9 +19,6 @@ Files.prototype.clear = function(){
 };
 
 Files.prototype.add = function(newFiles){
-    var self = this;
-    var files = this.files;
-
     this.node.innerHTML = "";
 
     if (newFiles instanceof window.FileList){
@@ -29,17 +26,17 @@ Files.prototype.add = function(newFiles){
             return file.path || file.name;
         });
     }
-    files = w.union(files, newFiles);
+    this.files = w.union(this.files, newFiles);
 
-    var commonDir = w.commonDir(files);
-    var shortFiles = files.map(function(file){
+    var commonDir = w.commonDir(this.files);
+    var shortFiles = this.files.map(function(file){
         return file.replace(commonDir, "");
     });
-    shortFiles.forEach(function(file){
-        var li = document.createElement("li");
-        li.textContent = file;
-        self.node.appendChild(li);
-    });
-    
-    this.files = files;
+    shortFiles.forEach(buildListItem.bind(this));
 };
+
+function buildListItem(file){
+    var li = document.createElement("li");
+    li.innerHTML = "<i class='fa-li fa fa-folder-o'></i>" + file;
+    this.node.appendChild(li);
+}

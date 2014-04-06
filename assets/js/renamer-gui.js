@@ -12,7 +12,7 @@ global.document = window.document;
 global.window = window;
 
 var view = {
-    files: new Files({ node: $("#view-files") }),
+    files: new Files({ node: $("[data-view=Files]") }),
     options: new Options({
         node: $("form"),
         find: $("#find"),
@@ -21,7 +21,7 @@ var view = {
         insensitive: $("#insensitive"),
         dryRun: $("#dryRun")
     }),
-    results: new ResultsView({ node: $("#view-results") })
+    results: new ResultsView({ node: $("[data-view=Results]") })
 };
 
 $("#clearButton").addEventListener("click", function(){

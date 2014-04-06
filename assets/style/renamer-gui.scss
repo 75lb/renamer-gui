@@ -16,6 +16,27 @@ body {
     padding: 0.2em; 
 }
 
+[data-view="Files"] {
+//    @extend .clean-list;
+    background-color: yellow;
+    &.dragOver { 
+        background-color: orange;
+    }
+}
+[data-view="Results"] {
+//    @extend .clean-list;
+    background-color: orange;
+    &.dragOver { 
+        background-color: red;
+    }
+    li {
+        div { display: inline-block; }
+        div:nth-child(1){ width: 90%; }
+        div:nth-child(2){ width: 10%; }
+    }
+}
+
+
 // TOP
 header {
     @include flex(0 0 3em);
@@ -51,23 +72,6 @@ output {
     }
     ul.hide { display: none; }
     
-    #view-files {
-        background-color: yellow;
-        &.dragOver { 
-            background-color: orange;
-        }
-    }
-    #view-results {
-        background-color: orange;
-        &.dragOver { 
-            background-color: red;
-        }
-        li {
-            div { display: inline-block; }
-            div:nth-child(1){ width: 90%; }
-            div:nth-child(1){ width: 10%; }
-        }
-    }
 }
 
 // BOTTOM

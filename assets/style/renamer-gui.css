@@ -196,6 +196,22 @@ body {
   margin: 0;
   padding: 0.2em; }
 
+[data-view="Files"] {
+  background-color: yellow; }
+  [data-view="Files"].dragOver {
+    background-color: orange; }
+
+[data-view="Results"] {
+  background-color: orange; }
+  [data-view="Results"].dragOver {
+    background-color: red; }
+  [data-view="Results"] li div {
+    display: inline-block; }
+  [data-view="Results"] li div:nth-child(1) {
+    width: 90%; }
+  [data-view="Results"] li div:nth-child(2) {
+    width: 10%; }
+
 header {
   -webkit-box-flex: 0 0 3em;
   -webkit-flex: 0 0 3em;
@@ -241,20 +257,6 @@ output {
     padding: 0; }
   output ul.hide {
     display: none; }
-  output #view-files {
-    background-color: yellow; }
-    output #view-files.dragOver {
-      background-color: orange; }
-  output #view-results {
-    background-color: orange; }
-    output #view-results.dragOver {
-      background-color: red; }
-    output #view-results li div {
-      display: inline-block; }
-    output #view-results li div:nth-child(1) {
-      width: 90%; }
-    output #view-results li div:nth-child(1) {
-      width: 10%; }
 
 form {
   -webkit-box-flex: 0 0 0em;
