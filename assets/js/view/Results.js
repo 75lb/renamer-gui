@@ -25,9 +25,6 @@ Results.prototype.display = function(results){
 };
 Results.prototype.add = function(result){
     result.display = result.shortAfter || result.shortBefore;
-    if (result.error){
-        result.display += " (" + result.error + ")";
-    }
     this.node.appendChild(buildListItem(result));
 };
 
@@ -36,7 +33,9 @@ function buildListItem(result){
         fileCol = document.createElement("div"),
         resultCol = document.createElement("div");
     fileCol.textContent = result.display;
-    resultCol.textContent = result.renamed ? w.symbol.tick : w.symbol.cross;
+    resultCol.innerHTML = result.renamed
+        ? w.symbol.tick
+        : util.format("<abbr title='%s'>%s</abbr>", result.error, w.symbol.cross);
     li.appendChild(fileCol);
     li.appendChild(resultCol);
     return li;

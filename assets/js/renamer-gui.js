@@ -1,7 +1,4 @@
 var renamer = require("renamer"),
-    // Files = require("./view/Files"),
-    // ResultsView = require("./view/Results"),
-    // Options = require("./view/Options"),
     Files = require("./assets/js/view/Files"),
     ResultsView = require("./assets/js/view/Results"),
     Options = require("./assets/js/view/Options"),
@@ -24,6 +21,25 @@ var view = {
     results: new ResultsView({ node: $("[data-view=Results]") })
 };
 
+var app = {
+    _state: "initial",
+    get state() { return this._state; },
+    set state(newState) {
+        if (this._state === "initial" && newState === "before" ){
+            view.files.show(true);
+            view.options.node.style.flexBasis = "11em";
+        } else if (this._state === "before" && newState === "after"){
+            view.results.show(true);
+            view.files.show(false);
+
+        } else {
+            throw new Error("invalid state transition");
+        }
+
+        this._state = newState;
+    }
+};
+
 $("#clearButton").addEventListener("click", function(){
     view.files.clear();
     view.results.clear();
@@ -42,18 +58,13 @@ window.ondrop = function(e){
     view.results.clear();
     view.files.node.classList.remove("dragOver");
     view.files.add(e.dataTransfer.files);
-
-    view.files.show(true);
-    // view.options.node.style.flexBasis = "11em";
+    app.state = "before";
 };
 
 /* RENAME */
 view.options.on("submit", function(e){
     e.preventDefault();
 
-    view.results.show(true);
-    view.files.show(false);
-    
     /* TODO: nature option to ignore undefined properties, like ".node" */
     var results = renamer.replace({
         files: view.files.files,
@@ -63,7 +74,7 @@ view.options.on("submit", function(e){
         "dry-run": view.options["dry-run"],
         regex: view.options.regex
     });
-    
+
     results = renamer.replaceIndexToken(results);
     if (view.options["dry-run"]){
         results = renamer.dryRun(results);
@@ -73,8 +84,9 @@ view.options.on("submit", function(e){
         view.files.add(results.afterList());
     }
     view.results.display(results);
+
+    app.state = "after";
 });
 
 view.results.show(false);
 view.files.show(false);
-view.options.node.style.flexBasis = "11em";
