@@ -23,20 +23,32 @@ var view = {
 
 var app = {
     _state: "initial",
+    _afterListerner: function(){
+        app.state = "before";
+    },
     get state() { return this._state; },
     set state(newState) {
         if (this._state === "initial" && newState === "before" ){
             view.files.show(true);
             view.options.node.style.flexBasis = "11em";
+
         } else if (this._state === "before" && newState === "after"){
             view.results.show(true);
             view.files.show(false);
+            view.options.once("change", function(){
+                app.state = "before";
+            });
 
+        } else if (this._state === "after" && newState === "before"){
+            view.results.show(false);
+            view.files.show(true);
+            
         } else {
             throw new Error("invalid state transition");
         }
 
         this._state = newState;
+        $("header h1").textContent = newState;
     }
 };
 

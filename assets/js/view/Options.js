@@ -56,5 +56,12 @@ function Options(elements){
             return el.dryRun.checked;
         }
     });
+    
+    el.find.addEventListener("input", function(){
+        self.emit("change");
+    });
+    el.replace.addEventListener("input", function(){
+        self.emit("change");
+    });
 }
 util.inherits(Options, View);
