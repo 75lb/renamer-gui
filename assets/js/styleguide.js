@@ -9,7 +9,7 @@ var view = {
   results: new ResultsView({ node: $("[data-view=Results]")})
 };
 
-view.files.add([ "clive", "hater", "nigeria" ]);
+view.files.add([ "index.html", ".gitignore", "test" ]);
 view.results.display(new renamer.Results([
     { before: "clive", after: "CLIVE", renamed: true },
     { before: "hater", after: "HATER", renamed: false }

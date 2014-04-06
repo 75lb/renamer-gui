@@ -197,12 +197,14 @@ body {
   padding: 0.2em; }
 
 [data-view="Files"] {
-  background-color: yellow; }
+  list-style-position: inside;
+  background-color: white; }
   [data-view="Files"].dragOver {
     background-color: orange; }
 
 [data-view="Results"] {
-  background-color: orange; }
+  list-style-position: inside;
+  background-color: white; }
   [data-view="Results"].dragOver {
     background-color: red; }
   [data-view="Results"] li div {
@@ -244,7 +246,6 @@ output {
   -webkit-justify-content: center;
   -moz-justify-content: center;
   justify-content: center;
-  border: 1px solid brown;
   position: relative;
   overflow: scroll; }
   output ul {

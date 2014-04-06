@@ -18,14 +18,16 @@ body {
 
 [data-view="Files"] {
 //    @extend .clean-list;
-    background-color: yellow;
+    list-style-position: inside;
+    background-color: white;
     &.dragOver { 
         background-color: orange;
     }
 }
 [data-view="Results"] {
 //    @extend .clean-list;
-    background-color: orange;
+    list-style-position: inside;
+    background-color: white;
     &.dragOver { 
         background-color: red;
     }
@@ -57,7 +59,6 @@ output {
     @include align-items(center);
     @include justify-content(center);
     
-    border: 1px solid brown;
     position: relative;
     overflow: scroll;
     
