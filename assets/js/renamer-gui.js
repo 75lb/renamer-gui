@@ -1,7 +1,10 @@
 var renamer = require("renamer"),
-    Files = require("./view/Files"),
-    ResultsView = require("./view/Results"),
-    Options = require("./view/Options"),
+    // Files = require("./view/Files"),
+    // ResultsView = require("./view/Results"),
+    // Options = require("./view/Options"),
+    Files = require("./assets/js/view/Files"),
+    ResultsView = require("./assets/js/view/Results"),
+    Options = require("./assets/js/view/Options"),
     $ = document.querySelector.bind(document);
 
 /* share access to the DOM with the required-in modules */
@@ -47,13 +50,13 @@ window.ondrop = function(e){
 /* RENAME */
 view.options.on("submit", function(e){
     e.preventDefault();
-    view.options.files = view.files.files;
 
     view.results.show(true);
     view.files.show(false);
     
     /* TODO: nature option to ignore undefined properties, like ".node" */
     var results = renamer.replace({
+        files: view.files.files,
         find: view.options.find,
         replace: view.options.replace,
         insensitive: view.options.insensitive,

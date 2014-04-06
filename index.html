@@ -7,29 +7,36 @@
   </head>
   <body>
     <header>
-      <h1>renamer</h1>
+      <h1></h1>
     </header>
+    
     <output>
       <ul id="view-files"></ul>
       <ul id="view-results"></ul>
       <p class="centredPanel">Drop files here</p>
     </output>
+    
     <form autocomplete="on">
-      <div role="group">
-        <label>Find: <input type="search" id="find" placeHolder="String or regular expression to replace" title="The text string to find in the filename" autofocus></label>
-        <label>Replace: <input type="text" id="replace" placeHolder="Replacement text"></label>
-      </div>
-      <div role="group">
-        <label>Regex <input type="checkbox" id="regex"></label>
-        <label>Ignore Case <input type="checkbox" id="insensitive"></label>
-        <label>Dry Run <input type="checkbox" id="dryRun" checked="checked"></label>
-      </div>
-      <div role="group">
+      <fieldset>
+        <div role="group" class="findReplace">
+          <label>Find: <input type="search" id="find" placeHolder="String or regular expression to replace" title="The text string to find in the filename" autofocus></label>
+          <label>Replace: <input type="text" id="replace" placeHolder="Replacement text"></label>
+        </div>
+        <div role="group" class="checkboxes">
+          <label>Regex <input type="checkbox" id="regex"></label>
+          <label>Ignore Case <input type="checkbox" id="insensitive"></label>
+          <label>Dry Run <input type="checkbox" id="dryRun" checked="checked"></label>
+        </div>
+      </fieldset>
+      <div role="group" class="controls">
         <progress value="70" max="100">70%</progress>
-        <button id="clearButton" type="reset">Clear</button>
-        <button id="rename" type="submit">Rename</button>
+        <div>
+          <button id="clearButton" type="reset">Clear</button>
+          <button id="rename" type="submit">Rename</button>
+        </div>
       </div>
     </form>
-    <script src="assets/js/bundle.js"></script>
+    <scriptx src="assets/js/bundle.js"></script>
+    <script src="assets/js/renamer-gui.js"></script>
   </body>
 </html>

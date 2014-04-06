@@ -62,6 +62,11 @@ output {
         &.dragOver { 
             background-color: red;
         }
+        li {
+            div { display: inline-block; }
+            div:nth-child(1){ width: 90%; }
+            div:nth-child(1){ width: 10%; }
+        }
     }
 }
 
@@ -75,7 +80,9 @@ form {
     div[role=group] {
         border: none;
     }
-    div[role=group]:nth-child(1) {
+    
+    // Find, replace
+    .findReplace {
         label {
             display: block;
             width: 100%;
@@ -88,20 +95,32 @@ form {
         }
     }
     
-    div[role=group]:nth-child(2) {
+    // checkboxes
+    .checkboxes {
         @extend %flexbox-row;
         @include justify-content(space-between);
+        margin: 0.2em 0;
         label {
             @include flex(0 0 auto);
         }
     }
     
-    div[role=group]:nth-child(3) {
+    // progress bar, buttons
+    .controls {
         @extend %flexbox-row;
-        @include justify-content(flex-end);
-        #rename {
-            background-color: lightblue;
-            border-radius: 5px;
+        margin: 0.2em 0;
+        
+        progress {
+            @include flex(1 1 auto);
+        }
+        div {
+            @include flex(1 1 auto);
+            text-align: right;
+
+            #rename {
+                background-color: lightblue;
+                border-radius: 5px;
+            }
         }
     }
     

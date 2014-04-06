@@ -164,7 +164,7 @@
   display: inline-block;
   margin-right: 1em; }
 
-body, output, form div[role=group]:nth-child(2), form div[role=group]:nth-child(3) {
+body, output, form .checkboxes, form .controls {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -177,7 +177,7 @@ body {
   -ms-flex-direction: column;
   flex-direction: column; }
 
-output, form div[role=group]:nth-child(2), form div[role=group]:nth-child(3) {
+output, form .checkboxes, form .controls {
   -webkit-flex-direction: row;
   -moz-flex-direction: row;
   -ms-flex-direction: row;
@@ -249,6 +249,12 @@ output {
     background-color: orange; }
     output #view-results.dragOver {
       background-color: red; }
+    output #view-results li div {
+      display: inline-block; }
+    output #view-results li div:nth-child(1) {
+      width: 90%; }
+    output #view-results li div:nth-child(1) {
+      width: 10%; }
 
 form {
   -webkit-box-flex: 0 0 0em;
@@ -262,36 +268,48 @@ form {
   -webkit-transition-duration: 0.3s; }
   form div[role=group] {
     border: none; }
-  form div[role=group]:nth-child(1) label {
+  form .findReplace label {
     display: block;
     width: 100%;
     margin: 0.2em 0; }
-    form div[role=group]:nth-child(1) label input {
+    form .findReplace label input {
       width: 100%;
       font-size: inherit;
       -webkit-appearance: none; }
-  form div[role=group]:nth-child(2) {
+  form .checkboxes {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     -webkit-justify-content: space-between;
     -moz-justify-content: space-between;
-    justify-content: space-between; }
-    form div[role=group]:nth-child(2) label {
+    justify-content: space-between;
+    margin: 0.2em 0; }
+    form .checkboxes label {
       -webkit-box-flex: 0 0 auto;
       -webkit-flex: 0 0 auto;
       -moz-box-flex: 0 0 auto;
       -moz-flex: 0 0 auto;
       -ms-flex: 0 0 auto;
       flex: 0 0 auto; }
-  form div[role=group]:nth-child(3) {
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    -webkit-justify-content: flex-end;
-    -moz-justify-content: flex-end;
-    justify-content: flex-end; }
-    form div[role=group]:nth-child(3) #rename {
-      background-color: lightblue;
-      border-radius: 5px; }
+  form .controls {
+    margin: 0.2em 0; }
+    form .controls progress {
+      -webkit-box-flex: 1 1 auto;
+      -webkit-flex: 1 1 auto;
+      -moz-box-flex: 1 1 auto;
+      -moz-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+      flex: 1 1 auto; }
+    form .controls div {
+      -webkit-box-flex: 1 1 auto;
+      -webkit-flex: 1 1 auto;
+      -moz-box-flex: 1 1 auto;
+      -moz-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+      text-align: right; }
+      form .controls div #rename {
+        background-color: lightblue;
+        border-radius: 5px; }
 
 :invalid {
   border: 1px solid red; }

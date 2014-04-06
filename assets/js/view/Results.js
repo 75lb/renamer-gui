@@ -13,9 +13,7 @@ Results.prototype.clear = function(){
     this.node.innerHTML = "";
 };
 Results.prototype.display = function(results){
-    var self = this;
     this.clear();
-
     var commonDir = w.commonDir(results.beforeList());
     results.list = results.list.map(function(result){
         result.shortBefore = result.before.replace(commonDir, "");
@@ -23,13 +21,23 @@ Results.prototype.display = function(results){
         return result;
     });
 
-    results.list.forEach(function(result){
-        result.display = result.shortAfter || result.shortBefore;
-        if (result.error){
-            result.display += " (" + result.error + ")";
-        }
-        var li = document.createElement("li");
-        li.textContent = result.display;
-        self.node.appendChild(li);
-    });
+    results.list.forEach(this.add.bind(this));
 };
+Results.prototype.add = function(result){
+    result.display = result.shortAfter || result.shortBefore;
+    if (result.error){
+        result.display += " (" + result.error + ")";
+    }
+    this.node.appendChild(buildListItem(result));
+};
+
+function buildListItem(result){
+    var li = document.createElement("li"),
+        fileCol = document.createElement("div"),
+        resultCol = document.createElement("div");
+    fileCol.textContent = result.display;
+    resultCol.textContent = result.renamed ? w.symbol.tick : w.symbol.cross;
+    li.appendChild(fileCol);
+    li.appendChild(resultCol);
+    return li;
+}
