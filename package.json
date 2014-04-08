@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test": "browserify test/view/*.js | testling",
-    "lint": "jshint assets/js/**/*.js test/**/*.js; echo; ",
+    "lint": "jshint assets/js/*.js assets/js/view/*.js test/view/*.js; echo; ",
     "sass": "sass --watch --sourcemap -I node_modules/wardrobe/ assets/style/renamer-gui.scss"
   },
   "dependencies": {

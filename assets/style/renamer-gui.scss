@@ -17,7 +17,6 @@ body {
 }
 
 [data-view="Files"] {
-//    @extend .clean-list;
     list-style-position: inside;
     background-color: white;
     &.dragOver { 
@@ -25,7 +24,6 @@ body {
     }
 }
 [data-view="Results"] {
-//    @extend .clean-list;
     list-style-position: inside;
     background-color: white;
     &.dragOver { 

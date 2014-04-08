@@ -2,7 +2,8 @@ var renamer = require("renamer"),
     Files = require("./assets/js/view/Files"),
     ResultsView = require("./assets/js/view/Results"),
     Options = require("./assets/js/view/Options"),
-    $ = document.querySelector.bind(document);
+    $ = document.querySelector.bind(document),
+    progress = $("progress");
 
 /* share access to the DOM with the required-in modules */
 global.document = window.document;
@@ -21,18 +22,26 @@ var view = {
     results: new ResultsView({ node: $("[data-view=Results]") })
 };
 
+/*  State Machine: initial -> before -> working -> after */
 var app = {
-    _state: "initial",
-    _afterListerner: function(){
-        app.state = "before";
-    },
+    _state: null,
     get state() { return this._state; },
     set state(newState) {
-        if (this._state === "initial" && newState === "before" ){
+        if (newState === "initial"){
+            progress.style.display = "none";
+            view.results.show(false);
+            view.files.show(false);
+            view.options.node.style.flexBasis = "0";
+
+        } else if (this._state === "initial" && newState === "before" ){
             view.files.show(true);
             view.options.node.style.flexBasis = "11em";
 
-        } else if (this._state === "before" && newState === "after"){
+        } else if (this._state === "before" && newState === "working"){
+            progress.style.display = "block";
+
+        } else if (this._state === "working" && newState === "after"){
+            progress.style.display = "none";
             view.results.show(true);
             view.files.show(false);
             view.options.once("change", function(){
@@ -42,7 +51,7 @@ var app = {
         } else if (this._state === "after" && newState === "before"){
             view.results.show(false);
             view.files.show(true);
-            
+
         } else {
             throw new Error("invalid state transition");
         }
@@ -55,6 +64,7 @@ var app = {
 $("#clearButton").addEventListener("click", function(){
     view.files.clear();
     view.results.clear();
+    app.state = "initial";
 });
 
 window.ondragover = function(e){
@@ -76,6 +86,8 @@ window.ondrop = function(e){
 /* RENAME */
 view.options.on("submit", function(e){
     e.preventDefault();
+
+    app.state = "working";
 
     /* TODO: nature option to ignore undefined properties, like ".node" */
     var results = renamer.replace({
@@ -100,5 +112,4 @@ view.options.on("submit", function(e){
     app.state = "after";
 });
 
-view.results.show(false);
-view.files.show(false);
+app.state = "initial";
