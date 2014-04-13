@@ -19,7 +19,7 @@ Files.prototype.clear = function(){
     this.node.innerHTML = "";
 };
 
-Files.prototype.add = function(newFiles){
+Files.prototype.add = function(results){
     this.node.innerHTML = "";
 
     if (newFiles instanceof window.FileList){
@@ -42,8 +42,19 @@ Files.prototype.add = function(newFiles){
 
 function buildListItem(stat){
     var li = document.createElement("li");
+    li.id = stat.path;
     li.innerHTML = stat.isDirectory()
         ? "<i class='fa-li fa fa-folder-o'></i>" + stat.shortPath
         : "<i class='fa-li fa fa-file-o'></i>" + stat.shortPath;
     this.node.appendChild(li);
 }
+
+Files.prototype.highlight = function(results){
+    var renamed = results.filter(function(result){
+        return result.renamed;
+    });
+    
+    renamed.forEach(function(result){
+        //highlight it
+    })
+};

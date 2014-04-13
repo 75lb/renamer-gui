@@ -89,7 +89,17 @@ view.options.on("submit", function(e){
 
     app.state = "working";
 
-    /* TODO: nature option to ignore undefined properties, like ".node" */
+    /* 
+    TODO: nature option to ignore undefined properties, like ".node"
+    TODO: Custom getters and setting on nature properties:
+        model.define({ 
+            name: "files", 
+            type: FileSet, 
+            set: function(files){ 
+                this._set(new FileSet(files)); 
+            } 
+        });
+    */
     var results = renamer.replace({
         files: view.files.files,
         find: view.options.find,
@@ -113,3 +123,7 @@ view.options.on("submit", function(e){
 });
 
 app.state = "initial";
+
+// view.options.once("change", function(){
+//     app.state = "before";
+// });

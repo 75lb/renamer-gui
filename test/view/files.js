@@ -1,9 +1,9 @@
 var test = require("tape"),
     Files = require("../../assets/js/view/Files");
 
-/* 
-Files view populated by dragdrop FileList objects, needs to return renamerOptions.files.
-unfortunately can't test .add(FileList) from JS 
+/*
+- Files view populated by dragdrop FileList objects (can't test from raw JS)
+- needs to return files array to pass to renamer.replace
 */
 
 function test_(name, cb){
@@ -15,28 +15,45 @@ function test_(name, cb){
     });
 }
 
-test_("files: .add(fileArray<string>)", function(ul, files, t){
-    files.add([ "/home/Lloyd/file1.txt", "/home/Lloyd/file2.txt" ]);
-    t.equal(ul.children.length, 2, ".add()");
+test_("files: .add(fileSet)", function(ul, files, t){
+    files.add([
+        { path: "/home/Lloyd/file1.txt", type: 1 },
+        { path: "/home/Lloyd/file2.txt", type: 1 }
+    ]);
+    t.equal(ul.children.length, 2, ".add(fileSet)");
 
-    files.add([ "/home/Lloyd/file3.txt", "/home/Lloyd/file4.txt" ]);
-    t.equal(ul.children.length, 4, ".add(files)");
+    files.add([
+        { path: "/home/Lloyd/file3.txt", type: 1 },
+        { path: "/home/Lloyd/dir1.txt", type: 2 }
+    ]);
+    t.equal(ul.children.length, 4, ".add(fileSet)");
 
     t.end();
 });
 
-test_("files: .add(fileArray<string>) does not add duplicates", function(ul, files, t){
-    files.add([ "/home/Lloyd/file1.txt", "/home/Lloyd/file2.txt" ]);
-    files.add([ "/home/Lloyd/file1.txt", "/home/Lloyd/file3.txt" ]);
+test_("files: .add(fileSet) does not add duplicates", function(ul, files, t){
+    files.add([
+        { path: "/home/Lloyd/file1.txt", type: 1 },
+        { path: "/home/Lloyd/file2.txt", type: 1 }
+    ]);
+    t.equal(ul.children.length, 2, "duplication check");
+
+    files.add([
+        { path: "/home/Lloyd/file1.txt", type: 1 },
+        { path: "/home/Lloyd/file3.txt", type: 1 }
+    ]);
     t.equal(ul.children.length, 3, "duplication check");
-    t.equal(files.files.length, 3, ".files duplication check");
 
     t.end();
 });
 
 test_("files: .clear()", function(ul, files, t){
-    files.add([ "/home/Lloyd/file1.txt", "/home/Lloyd/file2.txt" ]);
-    files.add([ "/home/Lloyd/file3.txt", "/home/Lloyd/file4.txt" ]);
+    files.add([
+        { path: "/home/Lloyd/file1.txt", type: 1 },
+        { path: "/home/Lloyd/file2.txt", type: 1 },
+        { path: "/home/Lloyd/file3.txt", type: 1 },
+        { path: "/home/Lloyd/dir1.txt", type: 2 }
+    ]);
 
     files.clear();
     t.equal(ul.children.length, 0, ".clear()");
@@ -44,32 +61,28 @@ test_("files: .clear()", function(ul, files, t){
     t.end();
 });
 
-test_("files: .files", function(ul, files, t){
-    files.add([ "/home/Lloyd/file1.txt", "/home/Lloyd/file2.txt" ]);
-    t.equal(files.files.length, 2, ".files");
+test_("files: .fileSet", function(ul, files, t){
+    files.add([
+        { path: "/home/Lloyd/file1.txt", type: 1 },
+        { path: "/home/Lloyd/file2.txt", type: 1 }
+    ]);
+    t.equal(files.fileSet.length, 2, ".fileSet");
 
-    files.add([ "/home/Lloyd/file3.txt", "/home/Lloyd/file4.txt" ]);
-    t.equal(files.files.length, 4, ".files");
-
-    files.clear();
-    t.equal(files.files.length, 0, ".files");
-    
-    files.add([ "/home/Lloyd/file1.txt", "/home/Lloyd/file2.txt" ]);
-    files.add([ "/home/Lloyd/file1.txt", "/home/Lloyd/file3.txt" ]);
-    t.equal(ul.children.length, 3, "duplication check");
-    t.equal(files.files.length, 3, ".files duplication check");
-    t.end();
-});
-
-test_("files: .files", function(ul, files, t){
-    files.add([ "/home/Lloyd/file1.txt", "/home/Lloyd/file2.txt" ]);
-    t.equal(files.files.length, 2, ".files");
-
-    files.add([ "/home/Lloyd/file3.txt", "/home/Lloyd/file4.txt" ]);
-    t.equal(files.files.length, 4, ".files");
+    files.add([
+        { path: "/home/Lloyd/file3.txt", type: 1 },
+        { path: "/home/Lloyd/file4.txt", type: 1 }
+    ]);
+    t.equal(files.fileSet.length, 4, ".fileSet");
 
     files.clear();
-    t.equal(files.files.length, 0, ".files");
-    
+    t.equal(files.fileSet.length, 0, ".fileSet");
+
+    files.add([
+        { path: "/home/Lloyd/file1.txt", type: 1 },
+        { path: "/home/Lloyd/file2.txt", type: 1 },
+        { path: "/home/Lloyd/file1.txt", type: 1 },
+        { path: "/home/Lloyd/file3.txt", type: 1 }
+    ]);
+    t.equal(files.fileSet.length, 3, ".fileSet duplication check");
     t.end();
 });
