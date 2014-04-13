@@ -75,6 +75,8 @@ window.ondragleave = function(e){
     e.preventDefault();
     view.files.node.classList.remove("dragOver");
 };
+
+/* ADD FILES */
 window.ondrop = function(e){
     e.preventDefault();
     view.results.clear();
