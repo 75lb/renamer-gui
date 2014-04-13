@@ -22,11 +22,6 @@ Files.prototype.add = function(newFileSet){
     var self = this;
     this.node.innerHTML = "";
 
-    // if (newFiles instanceof window.FileList){
-    //     newFiles = w.arrayify(newFiles).map(function(file){
-    //         return file.path || file.name;
-    //     });
-    // }
     this.fileSet = w.union(this.fileSet, newFileSet, "path");
     // var commonDir = w.commonDir(this.fileSet);
     this.fileSet
@@ -39,7 +34,7 @@ Files.prototype.add = function(newFileSet){
             buildListItem(self.node, fileSetItem);
         });
 };
-/* why does function.bind not work with testling? */
+
 function buildListItem(node, fileSetItem){
     var li = document.createElement("li");
     li.innerHTML = fileSetItem.type === 2

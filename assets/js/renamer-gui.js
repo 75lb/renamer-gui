@@ -1,7 +1,9 @@
 var renamer = require("renamer"),
+    w = require("wodge"),
     Files = require("./assets/js/view/Files"),
     ResultsView = require("./assets/js/view/Results"),
     Options = require("./assets/js/view/Options"),
+    mfs = require("more-fs"),
     $ = document.querySelector.bind(document),
     progress = $("progress");
 
@@ -76,30 +78,36 @@ window.ondragleave = function(e){
     view.files.node.classList.remove("dragOver");
 };
 
-/* ADD FILES */
-window.ondrop = function(e){
+window.ondrop = onAddFiles;
+view.options.on("submit", onRenameClick);
+
+function onAddFiles(e){
     e.preventDefault();
     view.results.clear();
     view.files.node.classList.remove("dragOver");
-    view.files.add(e.dataTransfer.files);
+
+    var fileSet = new mfs.FileSet(w.arrayify(e.dataTransfer.files).map(function(file){
+        return file.path;
+    }));
+    view.files.add(fileSet.list);
+
     app.state = "before";
 };
 
-/* RENAME */
-view.options.on("submit", function(e){
+function onRenameClick(e){
     e.preventDefault();
 
     app.state = "working";
 
-    /* 
+    /*
     TODO: nature option to ignore undefined properties, like ".node"
     TODO: Custom getters and setting on nature properties:
-        model.define({ 
-            name: "files", 
-            type: FileSet, 
-            set: function(files){ 
-                this._set(new FileSet(files)); 
-            } 
+        model.define({
+            name: "files",
+            type: FileSet,
+            set: function(files){
+                this._set(new FileSet(files));
+            }
         });
     */
     var results = renamer.replace({
@@ -122,8 +130,7 @@ view.options.on("submit", function(e){
     view.results.display(results);
 
     app.state = "after";
-});
-
+}
 app.state = "initial";
 
 // view.options.once("change", function(){
