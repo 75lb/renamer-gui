@@ -3,6 +3,7 @@ var test = require("tape"),
    
 test("options: set and get", function(t){
     var el = {
+        node: document.createElement("form"),
         find: document.createElement("input"),
         replace: document.createElement("input"),
         regex: document.createElement("input"),

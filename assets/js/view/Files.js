@@ -1,7 +1,6 @@
 var w = require("wodge"),
     View = require("./View"),
-    util = require("util"),
-    fs = require("fs");
+    util = require("util");
 
 module.exports = Files;
 
@@ -10,43 +9,44 @@ function Files(options){
     this.node = options.node;
 
     /** An array of files selected by the user */
-    this.files = [];
+    this.fileSet = [];
 }
 util.inherits(Files, View);
 
 Files.prototype.clear = function(){
-    this.files = [];
+    this.fileSet = [];
     this.node.innerHTML = "";
 };
 
-Files.prototype.add = function(results){
+Files.prototype.add = function(newFileSet){
+    var self = this;
     this.node.innerHTML = "";
 
-    if (newFiles instanceof window.FileList){
-        newFiles = w.arrayify(newFiles).map(function(file){
-            return file.path || file.name;
-        });
-    }
-    this.files = w.union(this.files, newFiles);
-
-    var commonDir = w.commonDir(this.files);
-    this.files
-        .map(function(file){
-            var stat = fs.statSync(file);
-            stat.path = file;
-            stat.shortPath = file.replace(commonDir, "");
-            return stat;
+    // if (newFiles instanceof window.FileList){
+    //     newFiles = w.arrayify(newFiles).map(function(file){
+    //         return file.path || file.name;
+    //     });
+    // }
+    this.fileSet = w.union(this.fileSet, newFileSet, "path");
+    // var commonDir = w.commonDir(this.fileSet);
+    this.fileSet
+        .map(function(fileSetItem){
+            fileSetItem.shortPath = "Clive" + fileSetItem.path; //file.replace(commonDir, "");
+            return fileSetItem;
         })
-        .forEach(buildListItem.bind(this));
+        // .forEach(buildListItem.bind(null, this.node));
+        .forEach(function(fileSetItem){
+            buildListItem(self.node, fileSetItem);
+        });
 };
-
-function buildListItem(stat){
+/* why does function.bind not work with testling? */
+function buildListItem(node, fileSetItem){
     var li = document.createElement("li");
-    li.id = stat.path;
-    li.innerHTML = stat.isDirectory()
-        ? "<i class='fa-li fa fa-folder-o'></i>" + stat.shortPath
-        : "<i class='fa-li fa fa-file-o'></i>" + stat.shortPath;
-    this.node.appendChild(li);
+    li.innerHTML = fileSetItem.type === 2
+        ? "<i class='fa-li fa fa-folder-o'></i>" + fileSetItem.shortPath
+        : "<i class='fa-li fa fa-file-o'></i>" + fileSetItem.shortPath;
+    node.appendChild(li);
+    fileSetItem.li = li;
 }
 
 Files.prototype.highlight = function(results){

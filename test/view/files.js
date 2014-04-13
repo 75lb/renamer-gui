@@ -55,6 +55,7 @@ test_("files: .clear()", function(ul, files, t){
         { path: "/home/Lloyd/dir1.txt", type: 2 }
     ]);
 
+    t.equal(ul.children.length, 4, ".clear()");
     files.clear();
     t.equal(ul.children.length, 0, ".clear()");
 
