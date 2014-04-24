@@ -29,10 +29,7 @@ Files.prototype.add = function(newFileSet){
             fileSetItem.shortPath = "Clive" + fileSetItem.path; //file.replace(commonDir, "");
             return fileSetItem;
         })
-        // .forEach(buildListItem.bind(null, this.node));
-        .forEach(function(fileSetItem){
-            buildListItem(self.node, fileSetItem);
-        });
+        .forEach(buildListItem.bind(null, this.node));
 };
 
 function buildListItem(node, fileSetItem){

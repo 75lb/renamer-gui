@@ -1,6 +1,6 @@
 var renamer = require("renamer"),
     w = require("wodge"),
-    Files = require("./assets/js/view/Files"),
+    Files2 = require("./assets/js/view/Files2"),
     ResultsView = require("./assets/js/view/Results"),
     Options = require("./assets/js/view/Options"),
     mfs = require("more-fs"),
@@ -12,7 +12,7 @@ global.document = window.document;
 global.window = window;
 
 var view = {
-    files: new Files({ node: $("[data-view=Files]") }),
+    files: new Files2({ node: $("[data-view=Files]") }),
     options: new Options({
         node: $("form"),
         find: $("#find"),
@@ -89,7 +89,7 @@ function onAddFiles(e){
     var fileSet = new mfs.FileSet(w.arrayify(e.dataTransfer.files).map(function(file){
         return file.path;
     }));
-    view.files.add(fileSet.list);
+    view.files.add(fileSet);
 
     app.state = "before";
 };
