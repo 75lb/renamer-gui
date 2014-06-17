@@ -136,3 +136,12 @@ app.state = "initial";
 // view.options.once("change", function(){
 //     app.state = "before";
 // });
+
+/* 
+Options model, bound to DOM elements
+Options view, just a DOM tree ->  Renamer
+options
+    - DOM find -> find
+    - DOM replace -> replace
+
+ */

@@ -1,7 +1,7 @@
 var w = require("wodge"),
     View = require("./View"),
     util = require("util"),
-    RenameSet = require("renamer").RenameSet;
+    Renamer = require("renamer").Renamer;
 
 module.exports = Files;
 
@@ -9,7 +9,7 @@ module.exports = Files;
 function Files(options){
     this.node = options.node;
 
-    this.renameSet = new RenameSet();
+    this.renamer = new Renamer();
 }
 util.inherits(Files, View);
 
@@ -18,8 +18,8 @@ Files.prototype.clear = function(){
 };
 
 Files.prototype.add = function(newFileSet){
-    this.renameSet.fileSet = newFileSet;
-    this.renameSet.fileSet.list.forEach(buildListItem.bind(null, this.node));
+    this.renamer.fileSet = newFileSet;
+    this.renamer.fileSet.list.forEach(buildListItem.bind(null, this.node));
 };
 
 function buildListItem(node, fileSetItem){
