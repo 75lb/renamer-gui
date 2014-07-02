@@ -1,5 +1,5 @@
 var renamer = require("renamer"),
-    w = require("wodge"),
+    a = require("array-tools"),
     Files2 = require("./assets/js/view/Files2"),
     ResultsView = require("./assets/js/view/Results"),
     Options = require("./assets/js/view/Options"),
@@ -86,7 +86,7 @@ function onAddFiles(e){
     view.results.clear();
     view.files.node.classList.remove("dragOver");
 
-    var fileSet = new mfs.FileSet(w.arrayify(e.dataTransfer.files).map(function(file){
+    var fileSet = new mfs.FileSet(a.arrayify(e.dataTransfer.files).map(function(file){
         return file.path;
     }));
     view.files.add(fileSet);

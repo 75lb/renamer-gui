@@ -1,5 +1,4 @@
-var w = require("wodge"),
-    View = require("./View"),
+var View = require("./View"),
     util = require("util"),
     Renamer = require("renamer").Renamer;
 

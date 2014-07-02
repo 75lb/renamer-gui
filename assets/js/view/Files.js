@@ -1,4 +1,4 @@
-var w = require("wodge"),
+var a = require("array-tools"),
     View = require("./View"),
     util = require("util");
 
@@ -22,7 +22,7 @@ Files.prototype.add = function(newFileSet){
     var self = this;
     this.node.innerHTML = "";
 
-    this.fileSet = w.union(this.fileSet, newFileSet, "path");
+    this.fileSet = a.union(this.fileSet, newFileSet, "path");
     // var commonDir = w.commonDir(this.fileSet);
     this.fileSet
         .map(function(fileSetItem){
